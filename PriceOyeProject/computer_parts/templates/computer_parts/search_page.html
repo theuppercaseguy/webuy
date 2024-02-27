@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Price</title>
+
+    <link rel="stylesheet" href="{% static 'computer_parts/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'computer_parts/css/search_page.css' %}">
+    
+</head>
+<body>
+    {% if not is_verified and user.is_authenticated %}
+    <div style="background-color: white; color: red; padding: 2px;">
+        <p style="text-align: center; margin: 0;">User not verified. Check your email for verification.</p>
+    </div>
+    {% endif %}
+    <header>
+        <div class="container container-header">
+            <div class="logo">
+                <a href="{% url 'computer_parts:home' %}">
+                    <img src="../../static/computer_parts/images/website/logo.png" alt="Best Price PK">
+                </a>
+            </div>
+            {% if user.is_authenticated %}
+            <div>
+                <p>Welcome, {{ user.first_name }}</p>
+                <form action="{% url 'computer_parts:signout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="signin-btn">Sign Out</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="signin-signup">
+                <a href="{% url 'computer_parts:signin' %}" class="signin-btn">Sign In</a>
+                <a href="{% url 'computer_parts:signup' %}" class="signup-btn">Sign Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <h2>Welcome to Best Price</h2>
+        <p>Find the best deals on computer parts!</p>
+        <form action="{% url 'computer_parts:search' %}" method="post">
+            {% csrf_token %}
+            
+            <div class="search-container">
+                <input type="text" name="search_query" placeholder="Search for computer parts..." value="{{ request.GET.search_query }}">
+                <button type="submit">Search</button>
+            </div>
+            <div class="options-container">
+                <div>
+                    <label for="sort">Sort by:</label>
+                    <select name="sort" id="sort">
+                        <option value="price_low_high">Price Low to High</option>
+                        <option value="price_high_low">Price High to Low</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="filter">Filter by Category:</label>
+                    <select name="filter" id="filter">
+                        <option value="">All</option>
+                        <option value="Mouse">Mouse</option>
+                        <option value="Monitor">Monitor</option>
+                        <option value="Keyboard">Keyboard</option>
+                        <option value="Graphics card">graphics card</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            {% for item in items %}
+            <div class="col">
+                <div class="product">
+                    <a href="{{ item.URL }}" target="_blank">
+                        <img src="{{ item.Image_URL }}" alt="{{ item.Name }}">
+                    </a>
+                    <div class="product-details">
+                        <h3>{{ item.Name }}</h3>
+                        <p><strong>Price: ${{ item.Price }}</strong></p>
+                        <p>{{ item.Discription }}</p>
+                        <p><strong>Category:</strong>  {{ item.Category }}</p>
+                        <p>Website: {{ item.website }}</p>
+                        <p> <strong>Tags:</strong>  {{ item.Tags }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-container">
+            <p>&copy; 2024 Best Price. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

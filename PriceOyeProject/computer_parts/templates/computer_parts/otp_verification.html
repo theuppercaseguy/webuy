@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Price</title>
+
+    <link rel="stylesheet" href="{% static 'computer_parts/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'computer_parts/css/signup.css' %}">
+    
+    <style>
+        /* OTP Verification Styles */
+        .otp-verification-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+    
+        .otp-verification-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    
+        .otp-form .input-group {
+            /* margin-right: 10px; */
+        }
+    
+        .otp-form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+    
+        .otp-form button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .resend-otp-btn {
+            display: block;
+            text-decoration: none;
+            color: #007bff;
+            margin-top: 10px;
+        }
+    
+        .resend-otp-btn:hover {
+            text-decoration: underline;
+        }
+    
+        .box {
+            max-width: 400px;
+        }
+    
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 0 auto; /* Center horizontally */
+        }
+        .alert{
+            color: red;
+            margin: 10px;
+        }
+    </style>
+    
+
+</head>
+<body>
+    <header>
+        <div class="container container-header">
+            <div class="logo ">
+                <a href="{% url 'computer_parts:home' %}">
+                    <img class="" src="../../static/computer_parts/images/website/logo.png" alt="Best Price PK">
+                </a>
+            </div>
+            
+            <div class="signin-signup">
+                <a href="{% url 'computer_parts:signin' %}" class="signin-btn">Sign In</a>
+                <a href="{% url 'computer_parts:signup' %}" class="signup-btn">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="otp-verification-container">
+        <h2>OTP Verification</h2>
+        <div class="flex-center">
+            <form method="post" class="box otp-form">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="otp" placeholder="Enter OTP" required>
+                </div>
+                <button type="submit">Verify OTP</button>
+            </form>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            <a href="{% url 'computer_parts:signup' %}" class="resend-otp-btn box">Resend OTP</a>
+        </div>
+    </div>
+        
+    <footer>
+        <div class="container footer-container">
+            <p>&copy; 2024 Best Price. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
