@@ -36,7 +36,11 @@ scrap.py
 
 ## Tutorial
 <video width="400" controls>
-  <source src="https://github.com/theuppercaseguy/webuy/blob/main/VID-20240705-WA0011.mp4" alt="Your browser doesn't support the video, click here to download it" type="video/mp4">
+  <source src="https://youtu.be/iZYPccZnhaU" alt="Your browser doesn't support the video, click here to download it" type="video/mp4">
 </video>
+
+. 
+
+[VIDEO LINK](https://youtu.be/iZYPccZnhaU)
 
 
